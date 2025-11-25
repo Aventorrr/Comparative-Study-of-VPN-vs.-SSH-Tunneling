@@ -1,3 +1,6 @@
+##Alec Lusher##
+##Overview of Server VM Terminal Commands Utilized During Testing##
+
 #Open VirutalBox, create an Ubantu 64-bit VM. Ensure that the VM has 4 vCPUs and 12 GB of RAM. In the Network Settings, select NAT for Adapter 1 and Host-Only Adapter for Adapter 2.
 #Once in VM, run: sudo apt update && sudo apt upgrade -y
 #Make sure netowrk adapters show by running: ip addr show
