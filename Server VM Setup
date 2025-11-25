@@ -39,6 +39,20 @@
 #Once the file paths are built, write to the server config file: sudo nano /etc/openvpn/server/server.conf
   #port 1194
   #proto udp
-#dev tun
-
-#ca /etc/
+  #dev tun
+  #ca /etc/openvpn/server/ca.crt
+  #cert /etc/openvpn/server/server.crt
+  #key /etc/openvpn/server/server.key
+  #tls-crypt /etc/openvpn/server/ta.key
+  #server 10.8.0.0 255.255.255.0
+  #topology subnet
+  #data-ciphers AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305
+  #data-ciphers-fallback AES-256-CBC
+  #auth SHA256
+  #remote-cert-tls client
+  #persist-key
+  #persist-tun
+  #keepalive 10 120
+  #verb 4
+##Start the Server: "sudo systemctl enable --now openvpn-server@server" and "sudo systemctl status openvpn-server@server"
+#In a different terminal, run: "iperf3 -s -B 10.8.0.1"
