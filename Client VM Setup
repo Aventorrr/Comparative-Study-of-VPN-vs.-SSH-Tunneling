@@ -4,7 +4,10 @@
 #Install used programs by running: sudo apt install openssh-server openvpn easy-rsa wireguard iperf3 wireshark cmstat -y
 
 #OpenSSH
-#For the Client, 
+#For the Client, run: ssh-keygen -t rsa -b 4096
+#Once the key pair is generated, copy the key over to the Server
+#Create the tunnel by running: ssh -L 5201:localhost:5201 vboxuser@(IP)
+#In another terminal, run iperf3: iperf3 -c 127.0.0.1 -p 5201
 
 #WireGuard
 #Generate Client key: "umask 077" and "wg genkey | tee ~wg_private | wg pubkey > ~/wg_public"
@@ -25,4 +28,25 @@
 #Shutdown the tunnel once the testing in finished: sudo wg-quick down wg0
 
 #OpenVPN
-#
+#Create an openVPN file on the Client VM
+#Copy the ovpn-ca files from the Server to the Client
+#Once the file paths are built, write to the server config file: sudo nano /etc/openvpn/server/server.conf
+  #client
+  #dev tun
+  #proto udp
+  #remote (IP) 1195
+  #resolv-retry infinite
+  #nobind
+  #persist-key
+  #persist-tun
+  #remote-cert-tls server
+  #auth SHA256
+  #data-ciphers AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305
+  #data-ciphers-fallback AES-256-CBC
+  #tls-crypt ta.key
+  #ca ca.crt
+  #cert client1.crt
+  #key client1.key
+  #verb 4
+#Start the Client: sudo openvpn --config ~/openvpn/client1.ovpn\
+#In a different terminal, run: "ip addr show tun0" and "iperf3 -c 10.8.0.1 -t 10"
