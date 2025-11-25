@@ -1,1 +1,17 @@
-#In VirutalBox, create a 
+#Open VirutalBox, create an Ubantu 64-bit VM. Ensure that the VM has 4 vCPUs and 12 GB of RAM. In the Network Settings, select NAT for Adapter 1 and Host-Only Adapter for Adapter 2.
+#Once in VM, run: sudo apt update && sudo apt upgrade -y
+#Make sure netowrk adapters show by running: ip addr show
+#Install used programs by running: sudo apt install openssh-server openvpn easy-rsa wireguard iperf3 wireshark cmstat -y
+
+#OpenSSH
+#For the server, all that needs to be done is to run "sudo systemctl start ssh" and "sudo systemctl enable ssh"
+#Once enabled, run: iperf3 -s
+#Wait for client to run the test
+
+#WireGuard
+#Generate server key: "umask 077" and "wg genkey | tee ~wg_private | wg pubkey > ~/wg_public"
+#Once generated, show the key to paste in Client: echo "PRIVATE:"; cat ~/wg_private; echo "PUBLIC:"; cat ~/wg_public
+#
+
+#OpenVPN
+#
