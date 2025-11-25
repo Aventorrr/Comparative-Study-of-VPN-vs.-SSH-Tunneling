@@ -1,0 +1,28 @@
+#Open VirutalBox, create an Ubantu 64-bit VM. Ensure that the VM has 4 vCPUs and 12 GB of RAM. In the Network Settings, select NAT for Adapter 1 and Host-Only Adapter for Adapter 2.
+#Once in VM, run: sudo apt update && sudo apt upgrade -y
+#Make sure netowrk adapters show by running: ip addr show
+#Install used programs by running: sudo apt install openssh-server openvpn easy-rsa wireguard iperf3 wireshark cmstat -y
+
+#OpenSSH
+#For the Client, 
+
+#WireGuard
+#Generate Client key: "umask 077" and "wg genkey | tee ~wg_private | wg pubkey > ~/wg_public"
+#Once generated, show the key to paste in Server: echo "PRIVATE:"; cat ~/wg_private; echo "PUBLIC:"; cat ~/wg_public
+#Run: "sudo mkdir -p /etc/wireguard" and "sudo nano /etc/wireguard/wg0.conf"
+#Inside the config file, the following info will be entered:
+  #[Interface]
+  #Address=10.6.0.2/24
+  #PrivateKey=(Client Private Key)
+  #[Peer]
+  #PublicKey=(Server Public Key)
+  #AllowdIPs=10.6.0.1/32
+  #Endpoint=(IPAddress):51820
+  #PersistentKeepalive=15
+#Once the config file is saved, run: sudo wg-quick up wg0
+#Ping the server to make sure the tunnel is working
+#Once tunnel is confirmed to be working, run: iperf3 -c 10.6.0.1 -B 10.6.0.2
+#Shutdown the tunnel once the testing in finished: sudo wg-quick down wg0
+
+#OpenVPN
+#
